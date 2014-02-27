@@ -32,7 +32,7 @@ YoukuVideoList.prototype.next = function (cb) {
     } else {
         var qsOptions = {
             client_id: client_id,
-            user_name: this.author,
+            user_name: this.author.cname,
             page: this.current / defaultPageSize + 1,
             count: defaultPageSize
         };
@@ -87,7 +87,7 @@ module.exports = {
         });
     },
 
-    getVideoListByAuthor: function (link, options) {
-        return new YoukuVideoList(link, options);
+    getVideoListByAuthor: function (author, options) {
+        return new YoukuVideoList(author, options);
     }
 };

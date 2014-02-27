@@ -11,7 +11,7 @@ var videoSchema = new mongoose.Schema({
     link: { type: String, unique: true },
     title: { type: String},
     formattedTitle: {type: String},
-    author: { type: String},
+    author: [{ name: String, cname: String}],
     updateAt: { type: Date, default: Date.now },
     published: { type: Date, index: true},
     duration: { type: Number}

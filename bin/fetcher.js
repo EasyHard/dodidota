@@ -10,6 +10,7 @@ var youku = require('../libs/youku');
 var async = require('async');
 var util = require('util');
 var _ = require('underscore');
+var Author = require('../models/Author');
 
 mongoose.connect(secrets.db);
 var db = mongoose.connection;
@@ -18,15 +19,22 @@ db.on('error', function() {
 });
 
 db.once('open', function () {
-    async.eachSeries(watchlist.authors, function (item, cb) {
-        console.log('handling', item);
-        var videos = youku.getVideoListByAuthor(item.name, {orderby: 'published'});
-        extractVideo(videos, cb);
-    }, function (err) {
+    Author.find(function (err, authors) {
         if (err) {
-            console.log(err);
+            console.log('err on find', err.toString());
+            return ;
         }
-        mongoose.disconnect();
+        console.log(authors);
+        async.eachSeries(authors, function (item, cb) {
+            console.log('handling', item);
+            var videos = youku.getVideoListByAuthor(item, {orderby: 'published'});
+            extractVideo(videos, cb);
+        }, function (err) {
+            if (err) {
+                console.log("err on eachSeries", err.toString());
+            }
+            mongoose.disconnect();
+        });
     });
 });
 
