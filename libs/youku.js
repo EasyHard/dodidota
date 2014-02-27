@@ -28,11 +28,11 @@ YoukuVideoList.prototype.next = function (cb) {
         //console.log('here', this.current);
         //console.log(this.list[this.current]);
         this.current++;
-        cb(null, videoFromYouku(this.list[this.current - 1], this.author));
+        cb(null, videoFromYouku(this.list[this.current - 1], this.author.name));
     } else {
         var qsOptions = {
             client_id: client_id,
-            user_name: this.author.cname,
+            user_name: this.author.name,
             page: this.current / defaultPageSize + 1,
             count: defaultPageSize
         };
@@ -62,7 +62,7 @@ function videoFromYouku(json, author) {
     var video = new Video();
     video.link = json.link;
     video.title = json.title;
-    video.author = author || json.user.name;
+    video.authorName = author || json.user.name;
     video.published = json.published;
     video.duration = json.duration;
     return video;

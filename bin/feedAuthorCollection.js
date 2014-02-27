@@ -22,10 +22,10 @@ db.once('open', function () {
     async.eachSeries(watchlist.authors, function (item, cb) {
         console.log('handling', item);
         var author = new Author();
-        author.cname = item.name;
+        author.name = item.name;
         author.site = item.site;
         author.nicknames = item.nicknames;
-        author.name = item.icon.replace('/img/author/', '').replace('.jpg', '');
+        // author.name = item.icon.replace('/img/author/', '').replace('.jpg', '');
         author.save(cb);
     }, function (err) {
         if (err) {

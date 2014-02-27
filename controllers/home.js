@@ -34,8 +34,6 @@ exports.index = function(req, res) {
         } else {
             _.map(videos, function (video) {
                 video.formattedPublished = (new moment(video.published)).format('YYYY/MM/DD');
-                var author = _.find(watchlist.authors, function(author) {return author.name === video.author;});
-                video.authorInfo = author;
             });
             res.render('home', {
                 title: 'Newest',

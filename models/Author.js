@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 
 
 var authorSchema = new mongoose.Schema({
-    name: { type:String, unique: true, index: true},
-    cname: { type: String},
+    name: { type: String, unique: true, index: true},
     site: { type: String},
     nicknames: [String]
 });
