@@ -1,0 +1,9 @@
+mixin makeList(videos, id)
+  div.list-group(id=id)
+    each video in videos
+      a.list-group-item(href="/video/"+video.id)
+        img.author-icon(src=video.authorInfo.icon height="32px")
+        != video.title
+        img.pull-right.video-icon(src='/img/video_icon.png' height="24px" style="margin-left:16px")
+        p.pull-right= video.formattedPublished
+

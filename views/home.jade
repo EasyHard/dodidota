@@ -1,8 +1,15 @@
 extends layout
-
+include videoList
 block content
-  h1 Bootstrap starter template
-  p.lead
-    | Use this document as a way to quickly start any new project.
-    br
-    | All you get is this text and a mostly barebones HTML document.
+
+  #groupbutton.btn-group
+    a(type="button" class="btn btn-default" href="/groupbyauthor") Author
+    a(type="button" class="btn btn-default" href="/groupbylastvisit") LastVisit
+    a(type="button" class="btn btn-default" href="/groupbylastdate") Date
+
+  +makeList(items, "videolist")
+
+  #pagebutton.btn-group.pull-right
+    - if (prevpage != 0)
+      a(type="button" class="btn btn-default" href=pageprefix+"./"+prevpage) PrevPage
+    a(type="button" class="btn btn-default" href=pageprefix+"./"+nextpage) NextPage

@@ -36,7 +36,7 @@ module.exports = {
     passReqToCallback: true
   },
 
-  githubAuth: true,
+  githubAuth: false,
   github: {
     clientID: 'Your Client ID',
     clientSecret: 'Your Client Secret',
@@ -61,7 +61,7 @@ module.exports = {
   },
 
   steam: {
-    apiKey: 'Your Steam API Key'
+    apiKey: '9F67079E3F985B24C574E9D102113C1A'
   },
 
   twilio: {
@@ -93,5 +93,10 @@ module.exports = {
     client_secret: 'Your Client Secret',
     returnUrl: 'http://localhost:3000/api/paypal/success',
     cancelUrl: 'http://localhost:3000/api/paypal/cancel'
+  },
+
+  youku: {
+      client_id: '7f484dbb6929c1b6',
+      client_secret: 'bb8d365ee4a9094318d106f974e7c6fc'
   }
 };
