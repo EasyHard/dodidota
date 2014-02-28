@@ -99,8 +99,19 @@ app.use(express.errorHandler());
  */
 
 app.get('/', homeController.index);
+app.get('/groupbyauthor/', homeController.groupbyauthor);
+app.get('/groupbyauthor', homeController.groupbyauthor);
+app.get('/groupbyauthor/p/:page', homeController.groupbyauthor);
 app.get('/p/:page', homeController.index);
 app.get('/video/:id', videoController.showVideoDetail);
+app.get('/author', homeController.authorList);
+// toggle following list when post.
+app.post('/addfollowing', homeController.togglefollowing);
+app.get('/author/:authorName', homeController.authorList);
+app.get('/following/', homeController.following);
+app.get('/following/p/:page', homeController.following);
+app.get('/following/groupbyauthor/', homeController.followingGroupByAuthor);
+app.get('/following/groupbyauthor/p/:page', homeController.followingGroupByAuthor);
 
 // no login
 app.get('/login', userController.getLogin);

@@ -10,16 +10,20 @@
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li(class=title=='Newest'?'active':undefined)
-          a(href='/') Newest
+          a(href='/') 最新更新
+        li(class=title=='Authors'?'active':undefined)
+          a(href='/author') 解说
+        li(class=title=='Following'?'active':undefined)
+          a(href='/following/') 我关注的更新
         li(class=title=='Contact'?'active':undefined)
-          a(href='/contact') Contact
+          a(href='/contact') 联系我们
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=title=='Login'?'active':undefined)
-            a(href='/login') Login
+            a(href='/login') 登录
           if secrets.localAuth
             li(class=title=='Create Account'?'active':undefined)
-              a(href='/signup') Create Account
+              a(href='/signup') 注册
         else
           li.dropdown(class=title=='Account Management'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -30,6 +34,6 @@
               | #{user.profile.name || user.email || user.id}&nbsp;
               i.caret
             ul.dropdown-menu
-              li: a(href='/account') My Account
+              li: a(href='/account') 我的帐号
               li.divider
-              li: a(href='/logout') Logout
+              li: a(href='/logout') 登出

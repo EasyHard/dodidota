@@ -1,9 +1,22 @@
-mixin makeList(videos, id)
-  div.list-group(id=id)
+mixin makeAuthorIcon(authorName, height, weight)
+  a.author-link(href="/author/"+authorName)
+    img.author-icon(src="/img/author/"+authorName+".jpg" height=height weight=weight alt=authorName title=authorName)
+
+mixin makeList(videos, showAuthorIcon, id)
+  div.list-group.video-list(id=id)
     each video in videos
-      a.list-group-item(href="/video/"+video.id)
-        img.author-icon(src="/img/author/"+video.authorName+".jpg" height="32px" alt=video.authorName style="z-index:5")
+      div.list-group-item
+        a.video-link(href="/video/"+video.id)
+        if showAuthorIcon
+          +makeAuthorIcon(video.authorName, "32px", "32px")
         != video.title
         img.pull-right.video-icon(src='/img/video_icon.png' height="24px" style="margin-left:16px")
         p.pull-right= video.formattedPublished
 
+ mixin makePageButton()
+   #pagebutton.btn-group.pull-right
+    - var prefix='./p/'
+    - if (req.params.page) prefix='./';
+    - if (page != 1)
+      a(type="button" class="btn btn-default" href=prefix+(page-1)) 上一页
+    a(type="button" class="btn btn-default" href=prefix+(page+1)) 下一页

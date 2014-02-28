@@ -87,6 +87,24 @@ module.exports = {
         });
     },
 
+    getUserInformation: function (user_name, cb) {
+        var option = {
+            url: 'https://openapi.youku.com/v2/users/show.json',
+            qs: {
+                client_id: client_id,
+                user_name: user_name,
+            },
+            json: true
+        };
+        request(option, function (err, msg, json) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null, json);
+            }
+        });
+    },
+
     getVideoListByAuthor: function (author, options) {
         return new YoukuVideoList(author, options);
     }
