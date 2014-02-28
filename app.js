@@ -85,6 +85,7 @@ app.use(function(req, res, next) {
   res.locals.secrets = secrets;
   next();
 });
+
 app.use(flash());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
@@ -106,7 +107,7 @@ app.get('/p/:page', homeController.index);
 app.get('/video/:id', videoController.showVideoDetail);
 app.get('/author', homeController.authorList);
 // toggle following list when post.
-app.post('/addfollowing', homeController.togglefollowing);
+app.post('/togglefollowing', homeController.togglefollowing);
 app.get('/author/:authorName', homeController.authorList);
 app.get('/following/', homeController.following);
 app.get('/following/p/:page', homeController.following);

@@ -20,3 +20,13 @@ mixin makeList(videos, showAuthorIcon, id)
     - if (page != 1)
       a(type="button" class="btn btn-default" href=prefix+(page-1)) 上一页
     a(type="button" class="btn btn-default" href=prefix+(page+1)) 下一页
+
+mixin makeFollowAuthorButton(user, authorName, req)
+  form(method='POST' action='/togglefollowing')
+    input(type='hidden', name='_csrf', value=token)
+    input(type='hidden', name='authorName', value=authorName)
+    input(type='hidden', name='redirect', value=req.url)
+    if user && user.following.indexOf(authorName) !== -1
+      input(type='submit', value='已关注')
+    else
+      input(type='submit', value='关注')

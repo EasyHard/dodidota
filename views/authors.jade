@@ -13,10 +13,4 @@ block content
               p
                 a.link(href='/author/'+authors[i].name)= authors[i].name
               p
-                form(method='POST' action='/author')
-                  input(type='hidden', name='_csrf', value=token)
-                  input(type='hidden', name='authorName', value=authors[i].name)
-                  if user && user.following.indexOf(authors[i].name) !== -1
-                    input(type='submit', value='已关注')
-                  else
-                    input(type='submit', value='关注')
+                +makeFollowAuthorButton(user, authors[i].name, req)

@@ -68,8 +68,10 @@ exports.authorList = function(req, res) {
                 res.render('exception', {title: err.toString()});
                 return;
             }
+            console.log(req);
             res.render('authors', {title: 'Authors',
-                                   authors: authors});
+                                   authors: authors,
+                                   req: req});
         });
         return ;
     }
@@ -123,7 +125,8 @@ function followingHelper(req, res, groupbyauthor) {
             }
             res.render('authors', {title: 'Following',
                                    authors: authors,
-                                   hint: '你还没有关注一个解说哦，快来关注一下吧。'});
+                                   hint: '你还没有关注一个解说哦，快来关注一下吧。',
+                                   req: req});
         });
     } else {
         var page = Number(req.params.page || 1);
