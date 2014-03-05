@@ -10,9 +10,14 @@ html
     != css('styles')
     != js('application')
   body
-    #wrap
+    .container
+      img.img-responsive(src="/img/banner.png")
+    .container
       include partials/navigation
+
+    #wrap
       .container
-        include partials/flash
-        block content
+        .realcontainer
+          include partials/flash
+          block content
     include partials/footer

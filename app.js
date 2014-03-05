@@ -114,7 +114,6 @@ app.get('/following/p/:page', homeController.following);
 app.get('/following/groupbyauthor/', homeController.followingGroupByAuthor);
 app.get('/following/groupbyauthor/p/:page', homeController.followingGroupByAuthor);
 
-// no login
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

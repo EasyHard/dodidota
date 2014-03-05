@@ -5,13 +5,13 @@ mixin makeAuthorIcon(authorName, height, weight)
 mixin makeList(videos, showAuthorIcon, id)
   div.list-group.video-list(id=id)
     each video in videos
-      div.list-group-item
+      span.list-group-item
         a.video-link(href="/video/"+video.id)
         if showAuthorIcon
           +makeAuthorIcon(video.authorName, "32px", "32px")
         != video.title
         img.pull-right.video-icon(src='/img/video_icon.png' height="24px" style="margin-left:16px")
-        p.pull-right= video.formattedPublished
+        span.pull-right= video.formattedPublished
 
  mixin makePageButton()
    #pagebutton.btn-group.pull-right
@@ -21,12 +21,12 @@ mixin makeList(videos, showAuthorIcon, id)
       a(type="button" class="btn btn-default" href=prefix+(page-1)) 上一页
     a(type="button" class="btn btn-default" href=prefix+(page+1)) 下一页
 
-mixin makeFollowAuthorButton(user, authorName, req)
-  form(method='POST' action='/togglefollowing')
+mixin makeFollowAuthorButton(user, authorName, req, size)
+  form.display-inline(method='POST' action='/togglefollowing')
     input(type='hidden', name='_csrf', value=token)
     input(type='hidden', name='authorName', value=authorName)
     input(type='hidden', name='redirect', value=req.url)
     if user && user.following.indexOf(authorName) !== -1
-      input(type='submit', value='已关注')
+      input.btn.btn-success(type='submit', value='已关注', class+="btn-"+size)
     else
-      input(type='submit', value='关注')
+      input.btn.btn-success(type='submit', value='关注', class="btn-"+size)

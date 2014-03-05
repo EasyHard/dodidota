@@ -1,7 +1,7 @@
 @import (less) "lib/animate.css";
 @import (less) "lib/font-awesome.min.css";
 @import "lib/bootstrap/bootstrap";
-@import "themes/default";
+@import "themes/ios7";
 
 // Scaffolding
 // ---- ---------------------
@@ -11,23 +11,23 @@ html, body {
 }
 
 body {
-  padding-top: 70px;
+  // padding-top: 70px;
 }
 
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by its height */
-  margin: 0 auto -110px;
-  /* Pad bottom by footer height + (optional) extra spacing */
-  padding: 0 0 120px;
-}
+// #wrap {
+//   min-height: 100%;
+//   height: auto !important;
+//   height: 100%;
+//   // /* Negative indent footer by its height */
+//   // margin: 0 auto -110px;
+//   // /* Pad bottom by footer height + (optional) extra spacing */
+//   // padding: 0 0 120px;
+// }
 
-#footer {
-  height: 110px;
-  padding-top: 15px;
-}
+// #footer {
+//   height: 110px;
+//   padding-top: 15px;
+// }
 
 // Navbar
 // -------------------------
@@ -134,13 +134,33 @@ body {
   top: 0;
   left: 0;
   z-index: 0;
+
+  // Hover state
+  &:hover,
+  &:focus {
+      //background-color: @navbar-default-link-active-bg
+      background-color: rgba(0,0,0,0.05)
+  }
 }
 
 .video-list .author-link {
     position: relative;
     z-index: 1;
-}
 
+}
 .author-div .link {
 
+}
+
+.display-inline {
+    display: inline;
+}
+
+.realcontainer {
+    width: 70%;
+    margin: auto;
+}
+
+.banner {
+    margin: 16px auto;
 }

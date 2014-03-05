@@ -84,7 +84,7 @@ exports.authorList = function(req, res) {
             title: "Author",
             items: videos,
             page: page,
-            currentAuthor: author,
+            currentAuthor: authorName,
             req: req
         });
     });

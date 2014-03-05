@@ -6,11 +6,10 @@ block content
   else
     a(type="button" class="btn btn-default" href="/p/"+page) 顺序查看
   each val, key in groups
-    p
+    div
       +makeAuthorIcon(key, "24px", "24px")
-      span.big
-        = key
-        +makeFollowAuthorButton(user, key, req)
+      = key
+      +makeFollowAuthorButton(user, key, req, 'xs')
 
     +makeList(val)
   +makePageButton()

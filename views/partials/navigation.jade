@@ -1,4 +1,5 @@
-.navbar.navbar-default.navbar-fixed-top
+//.navbar.navbar-default.navbar-fixed-top
+.navbar.navbar-default
   .container
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -29,8 +30,8 @@
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture
                 img.profile-image(src='#{user.profile.picture}')
-              else
-                img.profile-image(src='#{user.gravatar(60)}')
+              // else
+              //   img.profile-image(src='#{user.gravatar(60)}')
               | #{user.profile.name || user.email || user.id}&nbsp;
               i.caret
             ul.dropdown-menu
