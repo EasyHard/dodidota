@@ -132,6 +132,8 @@ function followingHelper(req, res, groupbyauthor) {
     var following = [];
     if (!checkUser(req, res)) {
         return ;
+    } else {
+        following = req.user.following;
     }
     if (following.length == 0) {
         Author.find(function (err, authors) {

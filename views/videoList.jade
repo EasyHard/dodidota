@@ -27,7 +27,7 @@ mixin makeFollowAuthorButton(user, authorName, req, size)
     input(type='hidden', name='authorName', value=authorName)
     input(type='hidden', name='redirect', value=req.url)
     if user && user.following.indexOf(authorName) !== -1
-      input.btn.btn-success(type='submit', value='已关注', class+="btn-"+size)
+      input.btn.btn-primary(type='submit', value='已关注', class+="btn-"+size)
     else
       input.btn.btn-success(type='submit', value='关注', class="btn-"+size)
 
