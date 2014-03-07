@@ -1,16 +1,22 @@
 var secrets = require('../config/secrets');
 var nodemailer = require("nodemailer");
 var smtpTransport = nodemailer.createTransport('SMTP', {
-//  service: 'Mailgun',
-//  auth: {
-//    user: secrets.mailgun.login,
-//    pass: secrets.mailgun.password
-//  }
-  service: 'SendGrid',
-  auth: {
-       user: secrets.sendgrid.user,
-       pass: secrets.sendgrid.password
-  }
+ // service: 'Mailgun',
+ // auth: {
+ //   user: secrets.mailgun.login,
+ //   pass: secrets.mailgun.password
+ // }
+ service: 'QQ',
+ auth: {
+   user: '278065913@qq.com',
+   pass: '1'
+ }
+
+  // service: 'SendGrid',
+  // auth: {
+  //      user: secrets.sendgrid.user,
+  //      pass: secrets.sendgrid.password
+  // }
 });
 
 /**
@@ -33,9 +39,9 @@ exports.getContact = function(req, res) {
  */
 
 exports.postContact = function(req, res) {
-  req.assert('name', 'Name cannot be blank').notEmpty();
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('message', 'Message cannot be blank').notEmpty();
+  req.assert('name', '名字不应该为空。').notEmpty();
+  req.assert('email', '邮件地址不应该为空。').isEmail();
+  req.assert('message', '正文不应该为空。').notEmpty();
 
   var errors = req.validationErrors();
 
@@ -47,12 +53,12 @@ exports.postContact = function(req, res) {
   var from = req.body.email;
   var name = req.body.name;
   var body = req.body.message;
-  var to = 'your@email.com';
-  var subject = 'API Example | Contact Form';
+  var to = 'liuzhiyou.cs@gmail.com';
+  var subject = '[DodiDota] ' + from;
 
   var mailOptions = {
     to: to,
-    from: from,
+    from: '278065913@qq.com',
     subject: subject,
     text: body + '\n\n' + name
   };
@@ -62,7 +68,7 @@ exports.postContact = function(req, res) {
       req.flash('errors', { msg: err.message });
       return res.redirect('/contact');
     }
-    req.flash('success', { msg: 'Email has been sent successfully!' });
+    req.flash('success', { msg: '邮件已被成功发送！' });
     res.redirect('/contact');
   });
 };

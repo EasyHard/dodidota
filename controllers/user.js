@@ -25,8 +25,8 @@ exports.getLogin = function(req, res) {
 exports.postLogin = function(req, res, next) {
     req.session.count = req.session.count || 0;
     req.session.count++;
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('password', 'Password cannot be blank').notEmpty();
+  req.assert('email', '电子邮件地址无效。').isEmail();
+  req.assert('password', '密码不能为空。').notEmpty();
 
   var errors = req.validationErrors();
 
@@ -45,7 +45,7 @@ exports.postLogin = function(req, res, next) {
 
     req.logIn(user, function(err) {
       if (err) return next(err);
-      req.flash('success', { msg: 'Success! You are logged in.' });
+      req.flash('success', { msg: '您已成功登录！' });
       return res.redirect('/');
     });
   })(req, res, next);
@@ -84,9 +84,9 @@ exports.getSignup = function(req, res) {
 exports.postSignup = function(req, res, next) {
     req.session.count = req.session.count || 0;
     req.session.count++;
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+  req.assert('email', '电子邮件地址无效。').isEmail();
+  req.assert('password', '密码至少为4位。').len(4);
+  req.assert('confirmPassword', '两次输入密码不匹配。').equals(req.body.password);
 
   var errors = req.validationErrors();
 
@@ -103,7 +103,7 @@ exports.postSignup = function(req, res, next) {
   user.save(function(err) {
     if (err) {
       if (err.code === 11000) {
-        req.flash('errors', { msg: 'User with that email already exists.' });
+        req.flash('errors', { msg: '电子邮件地址已被注册。' });
       }
       return res.redirect('/signup');
     }
@@ -141,7 +141,7 @@ exports.postUpdateProfile = function(req, res, next) {
 
     user.save(function(err) {
       if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
+      req.flash('success', { msg: '个人资料已更新。' });
       res.redirect('/account');
     });
   });
@@ -154,8 +154,8 @@ exports.postUpdateProfile = function(req, res, next) {
  */
 
 exports.postUpdatePassword = function(req, res, next) {
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+  req.assert('password', '密码至少为4位。').len(4);
+  req.assert('confirmPassword', '两次密码不匹配。').equals(req.body.password);
 
   var errors = req.validationErrors();
 
@@ -171,7 +171,7 @@ exports.postUpdatePassword = function(req, res, next) {
 
     user.save(function(err) {
       if (err) return next(err);
-      req.flash('success', { msg: 'Password has been changed.' });
+      req.flash('success', { msg: '密码已修改。' });
       res.redirect('/account');
     });
   });

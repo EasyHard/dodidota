@@ -5,13 +5,13 @@ module.exports = {
   sessionSecret: "Your Session Secret goes here",
 
   mailgun: {
-    login: 'Your Mailgun SMTP Username',
-    password: 'Your Mailgun SMTP Password'
+    login: 'liuzhiyou.cs@gmail.com',
+    password: 'google@mg'
   },
 
   sendgrid: {
-    user: 'Your SendGrid Username',
-    password: 'Your SendGrid Password'
+    user: 'easyhard',
+    password: 'google2sg'
   },
 
   gmail: {
