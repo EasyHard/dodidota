@@ -84,7 +84,6 @@ exports.authorList = function(req, res) {
                 res.render('exception', {title: err.toString()});
                 return;
             }
-            console.log(req);
             res.render('authors', {title: 'Authors',
                                    authors: authors,
                                    req: req});
