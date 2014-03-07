@@ -1,7 +1,7 @@
 var passport = require('passport');
 var _ = require('underscore');
 var User = require('../models/User');
-
+var genCaptcha = require('../libs/genCaptcha');
 /**
  * GET /login
  * Login page.
@@ -10,7 +10,8 @@ var User = require('../models/User');
 exports.getLogin = function(req, res) {
   if (req.user) return res.redirect('/');
   res.render('account/login', {
-    title: 'Login'
+      title: 'Login',
+      captcha: genCaptcha(req, res)
   });
 };
 
@@ -22,6 +23,8 @@ exports.getLogin = function(req, res) {
  */
 
 exports.postLogin = function(req, res, next) {
+    req.session.count = req.session.count || 0;
+    req.session.count++;
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password cannot be blank').notEmpty();
 
@@ -66,7 +69,8 @@ exports.logout = function(req, res) {
 exports.getSignup = function(req, res) {
   if (req.user) return res.redirect('/');
   res.render('account/signup', {
-    title: 'Create Account'
+      title: 'Create Account',
+      captcha: genCaptcha(req, res)
   });
 };
 
@@ -78,6 +82,8 @@ exports.getSignup = function(req, res) {
  */
 
 exports.postSignup = function(req, res, next) {
+    req.session.count = req.session.count || 0;
+    req.session.count++;
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password must be at least 4 characters long').len(4);
   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);

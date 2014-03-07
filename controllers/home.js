@@ -7,6 +7,7 @@ var moment = require('moment');
 var _ = require('underscore');
 var watchlist = require('../config/watchlist');
 var Author = require('../models/Author');
+var genCaptcha = require('../libs/genCaptcha');
 var pageSize = 15;
 
 function constructVideoPagingQuery(page, pageSize) {
@@ -46,7 +47,8 @@ function checkUser(req, res) {
     if (req.user === undefined) {
         res.render('account/login', {
             hint: '还没有登录，请先登录或<a href="/signup">注册</a>。',
-            title: 'Login'
+            title: 'Login',
+            captcha: genCaptcha(req, res)
         });
         return false;
     } else {
