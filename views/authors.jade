@@ -2,14 +2,14 @@ extends layout
 include videoList
 block content
   if hint
-    div= hint
+    p.text-center.hint.well= hint
   div.row
     - for (var j = 0; j < 4; j++)
         div.col-xs-3
           - for (var i = j; i < authors.length; i += 4)
-            div.author-warper
-              a.link(href='/author/'+authors[i].name)
-              img(src='/img/author/'+authors[i].name+'_large.jpg' width="128px" height="128px")
+            div.author-warper.text-center
+              a.link(href='/author/'+authors[i].name alt=authors[i].name title=authors[i].name)
+                img(src='/img/author/'+authors[i].name+'_large.jpg' width="128px" height="128px")
               p
                 a.link(href='/author/'+authors[i].name)= authors[i].name
               p

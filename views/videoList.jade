@@ -30,3 +30,10 @@ mixin makeFollowAuthorButton(user, authorName, req, size)
       input.btn.btn-success(type='submit', value='已关注', class+="btn-"+size)
     else
       input.btn.btn-success(type='submit', value='关注', class="btn-"+size)
+
+
+mixin makeAuthorBanner(authorName, user, req)
+    div
+      +makeAuthorIcon(authorName, "24px", "24px")
+      = authorName
+      +makeFollowAuthorButton(user, authorName, req, 'xs')
