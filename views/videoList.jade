@@ -8,7 +8,7 @@ mixin makeList(videos, showAuthorIcon, id)
       span.list-group-item
         a.video-link(href="/video/"+video.id)
         if showAuthorIcon
-          +makeAuthorIcon(video.authorName, "32px", "32px")
+          +makeAuthorIcon(video.authorName, "32", "32")
         != video.title
         img.pull-right.video-icon(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
         span.pull-right= video.formattedPublished
