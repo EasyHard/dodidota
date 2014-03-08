@@ -2,8 +2,8 @@ extends layout
 include videoList
 block content
   if title === 'Newest'
-    a(type="button" class="btn btn-default" href="/groupbyauthor/p/"+page) 按解说查看
+    a(class="btn btn-default" href="/groupbyauthor/p/"+page) 按解说查看
   if title === 'Following'
-    a(type="button" class="btn btn-default" href="/following/groupbyauthor/p/"+page) 按解说查看
+    a(class="btn btn-default" href="/following/groupbyauthor/p/"+page) 按解说查看
   +makeList(items, true, "videolist")
   +makePageButton()

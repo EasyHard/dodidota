@@ -1,6 +1,6 @@
-mixin makeAuthorIcon(authorName, height, weight)
+mixin makeAuthorIcon(authorName, height, width)
   a.author-link(href="/author/"+authorName)
-    img.author-icon(src="/img/author/"+authorName+".jpg" height=height weight=weight alt=authorName title=authorName)
+    img.author-icon(src="/img/author/"+authorName+".jpg" height=height width=width alt=authorName title=authorName)
 
 mixin makeList(videos, showAuthorIcon, id)
   div.list-group.video-list(id=id)
@@ -10,7 +10,7 @@ mixin makeList(videos, showAuthorIcon, id)
         if showAuthorIcon
           +makeAuthorIcon(video.authorName, "32px", "32px")
         != video.title
-        img.pull-right.video-icon(src='/img/video_icon.png' height="24px" style="margin-left:16px")
+        img.pull-right.video-icon(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
         span.pull-right= video.formattedPublished
 
  mixin makePageButton()
@@ -33,6 +33,6 @@ mixin makeFollowAuthorButton(user, authorName, req, size)
 
 mixin makeAuthorBanner(authorName, user, req)
     div
-      +makeAuthorIcon(authorName, "24px", "24px")
+      +makeAuthorIcon(authorName, "24", "24")
       = authorName
       +makeFollowAuthorButton(user, authorName, req, 'xs')
