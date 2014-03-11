@@ -19,6 +19,6 @@ module.exports = {
         ,new Author("张登溶_nada", "Youku", ["nada"], "/img/author/nada.jpg")
         ,new Author("卜严骏Pis", "Youku", ["Pis", "pis"], "/img/author/pis.jpg")
         ,new Author("舞ル灬", "Youku", ["舞儿"], "/img/author/wuer.jpg")
-
+        ,new Author("西瓦幽鬼", "Youku", [], "/img/author/西瓦幽鬼.jpg")
     ]
 };

@@ -32,7 +32,7 @@ db.once('open', function () {
             extractVideo(videos, cb);
         }, function (err) {
             if (err) {
-                console.log("err on eachSeries", err.toString());
+                console.log("err on eachSeries", err);
             }
             mongoose.disconnect();
         });
