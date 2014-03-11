@@ -69,12 +69,16 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(expressValidator());
 app.use(express.methodOverride());
+var hour = 3600000;
 app.use(express.session({
   secret: secrets.sessionSecret,
   store: new MongoStore({
     db: mongoose.connection.db,
     auto_reconnect: true
-  })
+  }),
+    cookie: {
+        maxAge: 24*hour*30
+    }
 }));
 app.use(express.csrf());
 app.use(passport.initialize());
