@@ -11,6 +11,7 @@ var async = require('async');
 var util = require('util');
 var _ = require('underscore');
 var Author = require('../models/Author');
+var videoMiddleWareProcess = require('./videoMiddleware').videoMiddleWareProcess;
 
 mongoose.connect(secrets.db);
 var db = mongoose.connection;
@@ -58,24 +59,26 @@ function formatTitle(video) {
     return formattedTitle;
 }
 
+var videoMiddleware = []
 function extractVideo(videos, cb) {
     videos.next(function (err, video) {
         if (err) {
             cb(err);
         } else if (video) {
             util.log(video);
-            video.formattedTitle = formatTitle(video);
-            video.save(function (err) {
-                if (err) {
-                    if (err.code === 11000) // error code of duplicate key
-                    {
-                        cb(null);
+            videoMiddleWareProcess(video, function(video) {
+                video.save(function (err) {
+                    if (err) {
+                        if (err.code === 11000) // error code of duplicate key
+                        {
+                            cb(null);
+                        } else {
+                            cb(err);
+                        }
                     } else {
-                        cb(err);
+                        extractVideo(videos, cb);
                     }
-                } else {
-                    extractVideo(videos, cb);
-                }
+                });
             });
         } else {
             cb(null);
