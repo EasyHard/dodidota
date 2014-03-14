@@ -48,23 +48,19 @@ exports.index = function(req, res) {
     });
 };
 
-exports.checkUser = function (req, res) {
+exports.checkUser = function (req, res, next) {
     if (req.user === undefined) {
         res.render('account/login', {
             hint: '还没有登录，请先登录或<a href="/signup">注册</a>。',
             title: 'Login',
             captcha: genCaptcha(req, res)
         });
-        return false;
     } else {
-        return true;
+        next();
     }
 };
 // toggle following list
 exports.togglefollowing = function (req, res) {
-    if (!checkUser(req, res)) {
-        return ;
-    }
     if (req.user && req.body.authorName) {
         var user = req.user;
         if (_.contains(user.following, req.body.authorName))
@@ -133,12 +129,7 @@ exports.followingGroupByAuthor = function (req, res) {
 };
 
 function followingHelper(req, res, groupbyauthor) {
-    var following = [];
-    if (!checkUser(req, res)) {
-        return ;
-    } else {
-        following = req.user.following;
-    }
+    var following = req.user.following || [];
     if (following.length == 0) {
         Author.find(function (err, authors) {
             if (err) {
