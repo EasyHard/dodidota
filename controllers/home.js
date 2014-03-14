@@ -28,6 +28,11 @@ function errorHelper(query, cb) {
     });
 }
 
+exports.listParamCons = function (req, res) {
+    req.params.page = Number(req.params.page || 1);
+};
+
+
 exports.index = function(req, res) {
     var page = Number(req.params.page || 1);
     errorHelper(constructVideoPagingQuery(page, pageSize), function (videos) {
@@ -43,7 +48,7 @@ exports.index = function(req, res) {
     });
 };
 
-function checkUser(req, res) {
+exports.checkUser = function (req, res) {
     if (req.user === undefined) {
         res.render('account/login', {
             hint: '还没有登录，请先登录或<a href="/signup">注册</a>。',

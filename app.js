@@ -112,7 +112,8 @@ app.get('/video/:id', videoController.showVideoDetail);
 app.get('/author', homeController.authorList);
 // toggle following list when post.
 app.post('/togglefollowing', homeController.togglefollowing);
-app.get('/author/:authorName', homeController.authorList);
+app.get('/author/:authorName/', homeController.authorList);
+app.get('/author/:authorName/p/:page', homeController.authorList);
 app.get('/following/', homeController.following);
 app.get('/following/p/:page', homeController.following);
 app.get('/following/groupbyauthor/', homeController.followingGroupByAuthor);

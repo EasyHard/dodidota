@@ -1,5 +1,5 @@
 mixin makeAuthorIcon(authorName, height, width)
-  a.author-link(href="/author/"+authorName)
+  a.author-link(href="/author/"+authorName+"/")
     img.author-icon(src="/img/author/"+authorName+".jpg" height=height width=width alt=authorName title=authorName)
 
 mixin makeList(videos, showAuthorIcon, id)
