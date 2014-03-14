@@ -30,7 +30,7 @@ exports.videoNameMatch = function (video, next) {
 function HTdny(video, cb) {
     if (video.title.search('海涛从零单闯东南亚') != -1)
         video.gametype = 'dota2';
-    next();
+    cb();
 };
 // order is important.
 var middleWare = [exports.defaultGametype, exports.authorDefaultGametype, exports.videoNameMatch, HTdny];
