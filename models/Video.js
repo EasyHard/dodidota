@@ -14,7 +14,11 @@ var videoSchema = new mongoose.Schema({
     updateAt: { type: Date, default: Date.now },
     published: { type: Date, index: true},
     duration: { type: Number},
-    gametype: { type: String, default: "dota1"}
+    gametype: { type: String, default: "dota1"},
+    match: {
+        manuallySet: { type: Boolean, default: "false"},
+        type: {type: String, default: "notset"}
+    }
 });
 
 /**
