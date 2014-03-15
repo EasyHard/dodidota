@@ -46,31 +46,6 @@ module.exports = function (app) {
             doQuery,
             index]);
 
-    // app.get('/',
-    //         paramCons,
-    //         setLocals,
-    //         indexQuery,
-    //         doQuery,
-    //         index);
-    // app.get('/p/:page',
-    //         paramCons,
-    //         setLocals,
-    //         indexQuery,
-    //         doQuery,
-    //         index);
-    // app.get('/gby/:groupby/',
-    //         paramCons,
-    //         setLocals,
-    //         indexQuery,
-    //         doQuery,
-    //         index);
-    // app.get('/gby/:groupby/p/:page',
-    //         paramCons,
-    //         setLocals,
-    //         indexQuery,
-    //         doQuery,
-    //         index);
-
     function authorQuery(req, res, next) {
         req.query = constructVideoPagingQuery(req.params.page, pageSize);
         req.query.where('authorName').equals(req.params.authorName);
@@ -89,18 +64,6 @@ module.exports = function (app) {
             authorQuery,
             doQuery,
             authorList]);
-    // app.get('/author/:authorName/',
-    //         paramCons,
-    //         setLocals,
-    //         authorQuery,
-    //         doQuery,
-    //         authorList);
-    // app.get('/author/:authorName/p/:page',
-    //         paramCons,
-    //         setLocals,
-    //         authorQuery,
-    //         doQuery,
-    //         authorList);
 
     function followingQuery(req, res, next) {
         req.query = constructVideoPagingQuery(req.params.page, pageSize);
@@ -149,43 +112,6 @@ module.exports = function (app) {
             followingQuery,
             doQuery,
             followingList]);
-    // app.get('/following/',
-    //         homeController.checkUser,
-    //         followingChecker,
-    //         setFollowing,
-    //         paramCons,
-    //         setLocals,
-    //         followingQuery,
-    //         doQuery,
-    //         followingList);
-    // app.get('/following/p/:page',
-    //         homeController.checkUser,
-    //         followingChecker,
-    //         setFollowing,
-    //         paramCons,
-    //         setLocals,
-    //         followingQuery,
-    //         doQuery,
-    //         followingList);
-    // app.get('/following/gby/:groupby/',
-    //         homeController.checkUser,
-    //         followingChecker,
-    //         setFollowing,
-    //         paramCons,
-    //         setLocals,
-    //         followingQuery,
-    //         doQuery,
-    //         followingList);
-    // app.get('/following/gby/:groupby/p/:page',
-    //         homeController.checkUser,
-    //         followingChecker,
-    //         setFollowing,
-    //         paramCons,
-    //         setLocals,
-    //         followingQuery,
-    //         doQuery,
-    //         followingList);
-
 
     function paramCons(req, res, next) {
         req.params = req.params || {};
