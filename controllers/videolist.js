@@ -19,6 +19,7 @@ module.exports = function (app) {
 
     function indexQuery(req, res, next) {
         req.query = constructVideoPagingQuery(req.params.page, pageSize);
+        req.query = req.query.where('match.type').in(['notset', 'notamatch']);
         next();
     }
 
@@ -113,6 +114,24 @@ module.exports = function (app) {
             doQuery,
             followingList]);
 
+    function matchQuery(req, res, next) {
+        req.query = constructVideoPagingQuery(req.params.page, pageSize);
+        req.query = req.query.where('match.type').nin(['notset', 'notamatch']);
+        next();
+    }
+
+    function matchList(req, res, next) {
+        res.render("home", {
+            title: "Match",
+            items: req.videos
+        });
+    }
+    setget(['/match/'],
+           [paramCons,
+            setLocals,
+            matchQuery,
+            doQuery,
+            matchList]);
     function paramCons(req, res, next) {
         req.params = req.params || {};
         req.params.page = Number(req.params.page || 1);
