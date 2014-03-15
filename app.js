@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
 var connectAssets = require('connect-assets');
-
+var _ = require('underscore');
 /**
  * Load controllers.
  */
@@ -83,13 +83,14 @@ app.use(express.session({
 app.use(express.csrf());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next) {
-  res.locals.user = req.user;
-  res.locals.token = req.csrfToken();
-  res.locals.secrets = secrets;
-  next();
-});
 
+app.use(function(req, res, next) {
+    res.locals.user = req.user;
+    res.locals.token = req.csrfToken();
+    res.locals.secrets = secrets;
+    res.locals.req = req;
+    next();
+});
 app.use(flash());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
@@ -103,21 +104,10 @@ app.use(express.errorHandler());
  * Application routes.
  */
 
-app.get('/', homeController.index);
-app.get('/groupbyauthor/', homeController.groupbyauthor);
-app.get('/groupbyauthor', homeController.groupbyauthor);
-app.get('/groupbyauthor/p/:page', homeController.groupbyauthor);
-app.get('/p/:page', homeController.index);
 app.get('/video/:id', videoController.showVideoDetail);
 app.get('/author', homeController.authorList);
-// toggle following list when post.
 app.post('/togglefollowing', homeController.checkUser, homeController.togglefollowing);
-app.get('/author/:authorName/', homeController.authorList);
-app.get('/author/:authorName/p/:page', homeController.authorList);
-app.get('/following/', homeController.checkUser, homeController.following);
-app.get('/following/p/:page', homeController.checkUser, homeController.following);
-app.get('/following/groupbyauthor/', homeController.checkUser, homeController.followingGroupByAuthor);
-app.get('/following/groupbyauthor/p/:page', homeController.checkUser, homeController.followingGroupByAuthor);
+require('./controllers/videolist')(app);
 
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);

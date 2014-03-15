@@ -2,9 +2,9 @@ extends layout
 include videoList
 block content
   if title === 'Following'
-    a(type="button" class="btn btn-default" href="/following/p/"+page) 顺序查看
+    a(type="button" class="btn btn-default" href="/following/p/"+params.page) 顺序查看
   else
-    a(type="button" class="btn btn-default" href="/p/"+page) 顺序查看
+    a(type="button" class="btn btn-default" href="/p/"+params.page) 顺序查看
   each val, key in groups
     +makeAuthorBanner(key, user, req)
     +makeList(val)

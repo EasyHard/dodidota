@@ -1,9 +1,8 @@
 extends layout
 include videoList
 block content
-  if title === 'Newest'
-    a(class="btn btn-default" href="/groupbyauthor/p/"+page) 按解说查看
-  if title === 'Following'
-    a(class="btn btn-default" href="/following/groupbyauthor/p/"+page) 按解说查看
+  if title === 'Newest' || title === 'Following'
+    - var ref = genurl(params, {groupby: 'authorName'})
+    a(class="btn btn-default" href=ref) 按解说查看
   +makeList(items, true, "videolist")
   +makePageButton()

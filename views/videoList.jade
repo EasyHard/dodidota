@@ -16,11 +16,9 @@ mixin makeList(videos, showAuthorIcon, id)
 
  mixin makePageButton()
    #pagebutton.btn-group.pull-right
-    - var prefix='./p/'
-    - if (req.params.page) prefix='./';
-    - if (page != 1)
-      a(type="button" class="btn btn-default" href=prefix+(page-1)) 上一页
-    a(type="button" class="btn btn-default" href=prefix+(page+1)) 下一页
+    - if (params.page != 1)
+      a(type="button" class="btn btn-default" href=genurl(params, {page: params.page-1})) 上一页
+    a(type="button" class="btn btn-default" href=genurl(params, {page: params.page+1})) 下一页
 
 mixin makeFollowAuthorButton(user, authorName, req, size)
   form.display-inline(method='POST' action='/togglefollowing')
