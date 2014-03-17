@@ -4,5 +4,10 @@ block content
   div.text-center
     legend= title
     div
-      embed(allowFullScreen="true" quality="high" width="800" height="600" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash" src=embedSrc)
+      iframe.video-detail(height=600 width=800 src=frameSrc frameborder=0 allowfullscreen)
+//      if req.useragent.isMobile
+
+      // else
+      //   embed.video-detail(allowFullScreen="true" quality="high" width="800" height="600" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash" src=embedSrc bgcolor="#FFD173")
+
     // <embed src="http://player.youku.com/player.php/sid/XNjc2NTM2MzEy/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
