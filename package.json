@@ -40,6 +40,7 @@
     "uglify-js": "~2.4.12",
     "moment": "^2.5.1",
     "captchagen": "^1.1.0",
-    "yesno": "0.0.1"
+    "yesno": "0.0.1",
+    "express-useragent": "0.0.11"
   }
 }

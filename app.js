@@ -3,6 +3,7 @@
  */
 
 var express = require('express');
+var useragent = require('express-useragent');
 var MongoStore = require('connect-mongo')(express);
 var flash = require('express-flash');
 var path = require('path');
@@ -64,6 +65,7 @@ app.use(connectAssets({
 app.use(express.compress());
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(useragent.express());
 app.use(express.cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
