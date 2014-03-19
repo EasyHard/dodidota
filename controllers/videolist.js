@@ -73,7 +73,7 @@ module.exports = function (app) {
     }
 
     function followingChecker(req, res, next) {
-        if (!req.user.following) {
+        if (!req.user.following || req.user.following.length === 0) {
             Author.find(function (err, authors) {
                 if (err) {
                     res.render('exception', {title: err.toString()});
