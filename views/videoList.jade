@@ -11,8 +11,8 @@ mixin makeList(videos, showAuthorIcon, id)
         if showAuthorIcon
           +makeAuthorIcon(video.authorName, "32", "32")
         != video.title
-        img.pull-right.video-icon(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
-        span.pull-right= video.formattedPublished
+        img.pull-right.video-icon.hidden-xs(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
+        span.pull-right.hidden-xs= video.formattedPublished
 
  mixin makePageButton()
    #pagebutton.btn-group.pull-right
