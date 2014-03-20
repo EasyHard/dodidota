@@ -1,7 +1,5 @@
-/**
- * GET /
- * Home page.
- */
+'use strict';
+
 var Video = require('../models/Video');
 var moment = require('moment');
 var _ = require('underscore');
@@ -172,7 +170,7 @@ module.exports = function (app) {
     function doQuery(req, res, next) {
         req.query.exec(function (err, videos) {
             if (err) {
-                res.render('error', {
+                res.render('exception', {
                     title: 'Oops, bad thing happens'
                 });
             } else {
