@@ -124,7 +124,7 @@ module.exports = function (app) {
             items: req.videos
         });
     }
-    setget(['/match/'],
+    setget(['/match/', '/match/p/:page'],
            [paramCons,
             setLocals,
             matchQuery,
@@ -138,6 +138,8 @@ module.exports = function (app) {
                 delete req.params.groupbyreq.params.groupby;
             }
         }
+        if (req.path.match('/match'))
+            req.params.match = true;
         next();
     }
 
@@ -145,6 +147,8 @@ module.exports = function (app) {
         var url = "/";
         if (params.following)
             url += "following/";
+        if (params.match)
+            url += "match/";
         if (params.authorName)
             url += "author/" + params.authorName + "/";
         if (params.groupby)
