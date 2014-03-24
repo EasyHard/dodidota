@@ -4,5 +4,8 @@ block content
   if title === 'Newest' || title === 'Following'
     - var ref = genurl(params, {groupby: 'authorName'})
     a(class="btn btn-default" href=ref) 按解说查看
+  if legend
+    legend= legend
   +makeList(items, true, "videolist")
-  +makePageButton()
+  if params && params.page
+    +makePageButton()

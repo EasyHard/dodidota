@@ -110,7 +110,7 @@ app.get('/video/:id', videoController.showVideoDetail);
 app.get('/author', homeController.authorList);
 app.post('/togglefollowing', homeController.checkUser, homeController.togglefollowing);
 require('./controllers/videolist')(app);
-
+require('./controllers/match')(app);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
