@@ -33,7 +33,15 @@ db.once('open', function () {
         nicknames: ["宝哥", "zhou宝龙"],
         defaultGametype: "dota2"
     });
-    var list = [xiwa, xg, bg];
+
+    var lgdgaming = new Author({
+        name: "LGD-GAMING",
+        site: "Youku",
+        nicknames: [],
+        defaultGametype: "dota2"
+    });
+
+    var list = [xiwa, xg, bg, lgdgaming];
     async.eachSeries(list, function (author, cb) {
         console.log('saving ', author);
         author.save(function (err) {
