@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  legend= tournament.name
+  table.tour-table.table.table-condensed.text-center
+    thead
+      tr
+        th.text-center Teams
+        for team in tournament.teams
+          th.text-center= team.name
+    tbody
+      - for (var i = 0; i < tournament.teams.length; i++)
+        tr
+          td= tournament.teams[i].name
+          - for (var j = 0; j < tournament.teams.length; j++)
+            if i !== j
+              - var params = {tournamentId:tournament.id, teamName1:tournament.teams[i].name, teamName2:tournament.teams[j].name};
+              - var videos = query(params);
+              if videos.length === 0
+                td
+              else
+                td
+                  a.tour-cell(href="/tournamentDetail?"+stringify(params))
+                    img(src='/img/video_icon.png' height="16" width="16"
+                    alt=tournament.teams[i].name + " vs " + tournament.teams[j].name
+                    title=tournament.teams[i].name + " vs " + tournament.teams[j].name)
+            else
+              td.warning N/A
