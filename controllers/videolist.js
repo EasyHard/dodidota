@@ -25,7 +25,7 @@ module.exports = function (app) {
         var videos = req.videos;
         var title = 'Newest';
         if (req.params.groupby) {
-            groups = _.groupBy(videos, req.params.groupby);
+            var groups = _.groupBy(videos, req.params.groupby);
             title = 'GroupBy' + req.params.groupby;
             res.render("groupbyauthor", {
                 title: "Group",
