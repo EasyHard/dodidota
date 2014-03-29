@@ -54,19 +54,63 @@ module.exports = function (app) {
                         title: '比赛不存在'
                     });
                 } else {
-                    Video.find().where('_id').in(query(tournament)(req.query))
-                        .exec(function (err, videos) {
-                            if (err) {
-                                res.render('exception', {
-                                    title: err.toString()
-                                });
-                            } else {
-                                res.render('home',
-                                           {title: 'Match',
-                                            legend: tournament.name + "  " + req.query.teamName1 + " vs " + req.query.teamName2,
-                                            items: videos});
-                            }
-                        });
+                    if (tournament.tournament.name === 'GroupStage') {
+                        Video.find().where('_id').in(query(tournament)(req.query))
+                            .exec(function (err, videos) {
+                                if (err) {
+                                    res.render('exception', {
+                                        title: err.toString()
+                                    });
+                                } else {
+                                    res.render('home',
+                                               {title: 'Match',
+                                                legend: tournament.name + "  " + req.query.teamName1 + " vs " + req.query.teamName2,
+                                                items: videos});
+                                }
+                            });
+                    } else {
+                        // Duel
+                        if (!req.query.s || !req.query.m || !req.query.r) {
+                            res.render('exception', {
+                                title: '参数错误。'
+                            });
+                            return;
+                        }
+                        var mid = {s:Number(req.query.s), m:Number(req.query.m), r:Number(req.query.r)};
+                        var matches = tournament.tournament.findMatches(mid);
+                        if (matches.length === 0) {
+                            res.render('exception', {
+                                title: '无法找到指定比赛。'
+                            });
+                            return;
+                        }
+                        var videoids = matches[0].videos;
+                        Video.find().where('_id').in(videoids)
+                            .exec(function (err, videos) {
+                                if (err) {
+                                    res.render('exception', {
+                                        title: err.toString()
+                                    });
+                                } else {
+                                    var zb;
+                                    if (tournament.tournament.last > 1) {
+                                        if (mid.s === 1)
+                                            zb = '胜者组第'+mid.r+'轮';
+                                        if (mid.s === 2)
+                                            zb = '败者组第'+mid.r+'轮';
+                                        if (mid.s === 3)
+                                            zb = '总决赛';
+                                    } else {
+                                        zb = '淘汰赛第'+mid.r+'轮';
+                                    }
+                                    var teams = tournament.getMatchTeams(matches[0]);
+                                    res.render('home',
+                                               {title: 'Match',
+                                                legend: tournament.name + "  " + zb + " " + teams[0].name + " v.s " + teams[1].name,
+                                                items: videos});
+                                }
+                            });
+                    }
                 }
             });
     };
