@@ -1,6 +1,7 @@
 'use strict';
 
 var Video = require('../models/Video');
+var Tournament = require('../models/Tournament');
 var moment = require('moment');
 var _ = require('underscore');
 var watchlist = require('../config/watchlist');
@@ -124,12 +125,33 @@ module.exports = function (app) {
             items: req.videos
         });
     }
-    setget(['/match/', '/match/p/:page'],
+    setget(['/matchlist/', '/matchlist/p/:page'],
            [paramCons,
             setLocals,
             matchQuery,
             doQuery,
             matchList]);
+
+    setget(['/match/'],
+           [paramCons,
+            setLocals,
+            matchQuery,
+            doQuery,
+            match]);
+
+    function match(req, res) {
+        Tournament.find(function(err, tournaments, next) {
+            if (err) {
+                return next(err);
+            }
+            return res.render('match', {
+                title: "Match",
+                items: req.videos,
+                tournaments: tournaments
+            });
+        });
+    }
+
     function paramCons(req, res, next) {
         req.params = req.params || {};
         req.params.page = Number(req.params.page || 1);
@@ -138,7 +160,7 @@ module.exports = function (app) {
                 delete req.params.groupbyreq.params.groupby;
             }
         }
-        if (req.path.match('/match'))
+        if (req.path.match('/matchlist/'))
             req.params.match = true;
         next();
     }
@@ -148,7 +170,7 @@ module.exports = function (app) {
         if (params.following)
             url += "following/";
         if (params.match)
-            url += "match/";
+            url += "matchlist/";
         if (params.authorName)
             url += "author/" + params.authorName + "/";
         if (params.groupby)

@@ -21,6 +21,7 @@ function query(tournament) {
     };
 };
 module.exports = function (app) {
+
     app.get('/tournament/:matchName', prettyMatch);
     function prettyMatch(req, res, next) {
         async.waterfall([function (cb) {

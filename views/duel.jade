@@ -10,9 +10,11 @@ mixin matchNode(matches, mbom)
           - var class1 = match.m[0] > match.m[1] ? ["winner"] : [];
           - var class2 = match.m[0] < match.m[1] ? ["winner"] : [];
           li.list-group-item.opponent(class=class1)
+            img.icon(src="/img/teams/"+teams[0].name+".png")
             span= teams[0].name
             span.pull-right.score= match.m[0]
           li.list-group-item.opponent(class=class2)
+            img.icon(src="/img/teams/"+teams[1].name+".png")
             span= teams[1].name
             span.pull-right.score= match.m[1]
         else

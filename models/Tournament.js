@@ -5,7 +5,8 @@ var mongoose = require('mongoose')
     , _ = require('underscore')
     , request = require('request')
     , cheerio = require('cheerio')
-    , async = require('async');
+    , async = require('async')
+    , fs = require('fs');
 
 var tournamentSchema = new mongoose.Schema({
     name: { type: String, unique: true, index: true},
@@ -127,6 +128,7 @@ tournamentSchema.methods.fetchMatchUpdate = function (cb) {
             var brackets = $('.bracket');
             // seeds and team name mapping
             var teams = [];
+            var teamIconUrls = [];
             brackets.each(function (s, elem) {
                 var rounds = $(this).find('.round');
                 rounds.each(function (r, elem) {
@@ -143,11 +145,12 @@ tournamentSchema.methods.fetchMatchUpdate = function (cb) {
                                 return;
                             }
                             if (teams.indexOf($(this).text()) === -1) {
+                                teamIconUrls.push($(this).parent().find('img').attr('src'));
                                 teams.push($(this).text());
                             }
                             var seed = teams.indexOf($(this).text()) + 1;
                             if (seed > tournament.teams.length)
-                                seeds.push(-1)
+                                seeds.push(-1);
                             else
                                 seeds.push(seed);
                         });
@@ -169,7 +172,16 @@ tournamentSchema.methods.fetchMatchUpdate = function (cb) {
             });
             console.log(tournament.tournament);
             console.log(tournament.tournament.matches);
-            cb();
+            console.log(teamIconUrls);
+            async.each(_.zip(teamIconUrls, tournament.teams), function (item, cb) {
+                console.log(item);
+                var url = item[0];
+                var team = item[1];
+                var pipe = request.get('http://www.gosugamers.net/'+url).pipe(fs.createWriteStream('../public/img/teams/'+team.name+".png"));
+                pipe.on('error', cb);
+                pipe.on('end', cb);
+                pipe.on('close', cb);
+            }, cb);
         }], cb);
     } else {
         cb();

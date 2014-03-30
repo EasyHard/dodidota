@@ -23,10 +23,10 @@ require('./opendbonce')(function (cb) {
             t.alias = [];
         t.alias.push(t.name);
         tour = new Tournament(t);
+        tour.populate('teams', cb);
+    }, function (tournament, cb) {
         tour.fetchMatchUpdate(cb);
     }, function (cb) {
-        tour.populate('teams', cb);
-    }, function (tt, cb) {
         async.map(tour.alias, function(name, cb) {
             Video.find({title:new RegExp(name)}, cb);
         }, cb);
