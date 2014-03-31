@@ -24,24 +24,53 @@ module.exports = function (app) {
 
     app.get('/tournament/:matchName', prettyMatch);
     function prettyMatch(req, res, next) {
+        var tournament;
         async.waterfall([function (cb) {
             Tournament.findOne({name:req.params.matchName})
-                .populate('teams videos').exec(cb);
-        }, function (tournament, cb) {
-            if (tournament === null) {
-                res.render('exception', {
-                    title: '比赛不存在'
-                });
+                .populate('teams').exec(cb);
+        }, function (tour, cb) {
+            if (tour === null) {
+                cb(new Error('比赛不存在'));
+                return ;
+            }
+            tournament = tour;
+            if (req.query.authorName) {
+                async.each(tournament.tournament.matches, function (match, cb) {
+                    if (match.videos) {
+                        Video.find().where('_id').in(match.videos).exec(function (err, videos) {
+                            if (err)
+                                return cb(err);
+                            match.videos = videos;
+                            return cb();
+                        });
+                    } else {
+                        return cb();
+                    }
+                }, cb);
             } else {
-                res.render('tournament', {
-                    title: 'Match',
-                    tournament: tournament,
-                    query: query(tournament),
-                    stringify: require('querystring').stringify
-                });
+                cb();
             }
         }], function (err) {
-            next(new Error(err));
+            if (err) {
+                next(err);
+                return;
+            }
+            if (req.query.authorName) {
+                _.each(tournament.tournament.matches, function (match) {
+                    match.videos = _.filter(match.videos, function (video) {
+                        return video.authorName == req.query.authorName;
+                    });
+                });
+            }
+            res.render('tournament', {
+                title: 'Match',
+                tournament: tournament,
+                query: query(tournament),
+                stringify: function (obj) {
+                    obj = _.extend(obj, req.query);
+                    return require('querystring').stringify(obj);
+                }
+            });
         });
     }
     app.get('/tournamentDetail', tournamentDetail);
@@ -63,6 +92,8 @@ module.exports = function (app) {
                                         title: err.toString()
                                     });
                                 } else {
+                                    if (req.query.authorName)
+                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName});
                                     res.render('home',
                                                {title: 'Match',
                                                 legend: tournament.name + "  " + req.query.teamName1 + " vs " + req.query.teamName2,
@@ -93,6 +124,8 @@ module.exports = function (app) {
                                         title: err.toString()
                                     });
                                 } else {
+                                    if (req.query.authorName)
+                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName});
                                     var zb;
                                     if (tournament.tournament.last > 1) {
                                         if (mid.s === 1)
