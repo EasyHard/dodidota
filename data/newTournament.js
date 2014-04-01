@@ -31,6 +31,9 @@ require('./opendbonce')(function (cb) {
             Video.find({title:new RegExp(name)}, cb);
         }, cb);
     }, function (result, cb) {
+        _.each(tour.tournament.matches, function (match) {
+            match.videos = [];
+        });
         console.log('here');
         console.log(tour);
         result = _.flatten(result);

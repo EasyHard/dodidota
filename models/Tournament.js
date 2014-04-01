@@ -44,13 +44,17 @@ tournamentSchema.methods.hasVideo = function (video) {
 // Each time saving a tournament, try to add padding videos to match.
 tournamentSchema.methods.handlePaddingVideos = function (cb) {
     var tournament = this;
-    this.populate('paddingVideos', function (err) {
+    console.log(this);
+    this.populate('paddingVideos', function (err, tournament) {
         if (err) {
             cb(err);
         }
         else {
-            for (var i  = 0; i < tournament.paddingVideos.length; i += 1)
+            console.log('paddingVideo', tournament.paddingVideos);
+            for (var i  = 0; i < tournament.paddingVideos.length; i += 1) {
+                console.log('handling paddingVideos', tournament.paddingVideos[i].title);
                 tournament.addVideo(tournament.paddingVideos[i]);
+            }
             cb(null);
         }
     });
@@ -80,14 +84,14 @@ tournamentSchema.methods.addVideo = function (video) {
         tournament.markModified('tournament');
         succ = true;
     } else if (matches.length > 1) {
-        console.log('matches can\'t not tell', matches);
-    } else if (macthes.length === 0) {
+        console.log('matches can\'t not tell', matches[0].id, matches[0].p, matches[1].id, matches[1].p);
+    } else if (matches.length === 0) {
         console.log('no matching match');
     }
     if (!succ) {
         console.log('video', video.title, 'failed to add into a match, but tournament has it');
-        if (tournament.paddingVideos.indexOf(video) === -1)
-            tournament.paddingVideos.push(video);
+        // if (tournament.paddingVideos.indexOf(video) === -1)
+        //     tournament.paddingVideos.push(video);
     }
     return succ;
 };
@@ -202,11 +206,7 @@ tournamentSchema.methods.fetchMatchUpdate = function (cb) {
                     });
                 });
             });
-            console.log(tournament.tournament);
-            console.log(tournament.tournament.matches);
-            console.log(teamIconUrls);
             async.each(_.zip(teamIconUrls, tournament.teams), function (item, cb) {
-                console.log(item);
                 var url = item[0];
                 var team = item[1];
                 var pipe = request.get('http://www.gosugamers.net/'+url).pipe(fs.createWriteStream('../public/img/teams/'+team.name+".png"));

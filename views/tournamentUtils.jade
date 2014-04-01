@@ -4,6 +4,8 @@ mixin makeTournamentList(tournaments, legendTitle)
       legend= legendTitle
     ul.list-group
       for tour in tournaments
-        a.list-group-item(href="/tournament/"+tour.name)
-          img(src="/img/tournaments/"+tour.icon height="24" width="24" style="margin-right:8px;")
+        - var href="/tournament/"+tour.name;
+        - href += urlparam? "?" + urlparam : "";
+        a.list-group-item(href=href)
+          img(src="/img/tournaments/"+tour.icon height="24" style="margin-right:8px;")
           = tour.name
