@@ -5,7 +5,7 @@ mixin makeAuthorIcon(authorName, height, width)
 mixin makeList(videos, showAuthorIcon, id)
   div.list-group.video-list(id=id)
     each video in videos
-      span.list-group-item
+      div.list-group-item
         a.video-link(href="/video/"+video.id)
         img.gametype(src='/img/'+video.gametype+'.png' height="24" width="24" alt="这是一个"+video.gametype+"视频" title="这是一个"+video.gametype+"视频")
         if showAuthorIcon

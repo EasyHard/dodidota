@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
     , Schema = mongoose.Schema
     , Team = require('./Team')
+    , Video = require('./Video')
     , groupstage = require('groupstage')
     , _ = require('underscore')
     , request = require('request')
@@ -19,7 +20,8 @@ var tournamentSchema = new mongoose.Schema({
     startAt: {type: Date},
     skipAfter: {type: Date},
     // a instance of https://github.com/clux/tournament
-    tournament : {}
+    tournament : {},
+    icon: {type: String}
 });
 
 tournamentSchema.post('init', function(doc) {
@@ -102,6 +104,36 @@ tournamentSchema.methods.getMatchTeams = function (match) {
 
 tournamentSchema.methods.seedForTeam = function (team) {
     return this.teams.indexOf(team) + 1;
+};
+
+// cb<err, tournament>, populated videos are in tournament.tournament.matches
+tournamentSchema.methods.populateVideos = function (cb) {
+    var tournament = this;
+    async.each(tournament.tournament.matches, function (match, cb) {
+        if (match.videos) {
+            Video.find().where('_id').in(match.videos).exec(function (err, videos) {
+                if (err) {
+                    cb (err);
+                } else {
+                    match.videos = videos;
+                    cb();
+                }
+            });
+        } else {
+            cb();
+        }
+    }, cb);
+};
+
+// cb<err, tournament>, filtered videos are still in tournament.tournament.matches
+// make sure vidoes are populated before using this method.
+tournamentSchema.methods.videosFilterByAuthorName = function (authorName) {
+    var tournament = this;
+    _.each(tournament.tournament.matches, function (match) {
+        match.videos = _.filter(match.videos, function (video) {
+            return video.authorName == authorName;
+        });
+    });
 };
 
 tournamentSchema.methods.getMatchesByTeams = function (teams) {

@@ -1,0 +1,9 @@
+mixin makeTournamentList(tournaments, legendTitle)
+  if tournaments && tournaments.length !== 0
+    if legendTitle
+      legend= legendTitle
+    ul.list-group
+      for tour in tournaments
+        a.list-group-item(href="/tournament/"+tour.name)
+          img(src="/img/tournaments/"+tour.icon height="24" width="24" style="margin-right:8px;")
+          = tour.name

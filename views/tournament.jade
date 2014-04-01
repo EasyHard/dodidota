@@ -6,3 +6,5 @@ block content
     include groupstage
   if tournament.tournament.name === 'Duel'
     include duel
+  if req.query && req.query.authorName
+    a.btn.btn-info.pull-right(href="/author/" + req.query.authorName+"/")= req.query.authorName+"的其他视频"

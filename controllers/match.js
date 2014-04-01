@@ -35,18 +35,7 @@ module.exports = function (app) {
             }
             tournament = tour;
             if (req.query.authorName) {
-                async.each(tournament.tournament.matches, function (match, cb) {
-                    if (match.videos) {
-                        Video.find().where('_id').in(match.videos).exec(function (err, videos) {
-                            if (err)
-                                return cb(err);
-                            match.videos = videos;
-                            return cb();
-                        });
-                    } else {
-                        return cb();
-                    }
-                }, cb);
+                tournament.populateVideos(cb);
             } else {
                 cb();
             }
@@ -56,11 +45,7 @@ module.exports = function (app) {
                 return;
             }
             if (req.query.authorName) {
-                _.each(tournament.tournament.matches, function (match) {
-                    match.videos = _.filter(match.videos, function (video) {
-                        return video.authorName == req.query.authorName;
-                    });
-                });
+                tournament.videosFilterByAuthorName(req.query.authorName);
             }
             res.render('tournament', {
                 title: 'Match',

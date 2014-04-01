@@ -4,6 +4,7 @@ var Video = require('../models/Video');
 var Tournament = require('../models/Tournament');
 var moment = require('moment');
 var _ = require('underscore');
+var async = require('async');
 var watchlist = require('../config/watchlist');
 var Author = require('../models/Author');
 var genCaptcha = require('../libs/genCaptcha');
@@ -51,11 +52,38 @@ module.exports = function (app) {
         req.query.where('authorName').equals(req.params.authorName);
         next();
     }
+    function tournamentFinder(req, res, next) {
+        var tournaments;
+        async.waterfall([function (cb) {
+            Tournament.find(cb);
+        }, function (tours, cb) {
+            tournaments = tours;
+            async.each(tournaments, function (tournament, cb) {
+                tournament.populateVideos(cb);
+            }, cb);
+        }], function (err) {
+            if (err) {
+                console.log('tournamentFinder error', err);
+                next();
+            } else {
+                tournaments = _.filter(tournaments, function (tournament) {
+                    tournament.videosFilterByAuthorName(req.params.authorName);
+                    var list = _.flatten(_.map(tournament.tournament.matches,
+                        function (match) { return match.videos;}));
+                    return list.length !== 0;
+                });
+                req.tournaments = tournaments;
+                next();
+            }
+        });
+    }
     function authorList(req, res) {
-        res.render("home", {
+        res.render("author", {
             title: "Author",
             items: req.videos,
-            currentAuthor: req.params.authorName
+            currentAuthor: req.params.authorName,
+            tournaments: req.tournaments,
+            urlparam: require('querystring').stringify({authorName:req.params.authorName})
         });
     }
     setget(['/author/:authorName/', '/author/:authorName/p/:page'],
@@ -63,6 +91,7 @@ module.exports = function (app) {
             setLocals,
             authorQuery,
             doQuery,
+            tournamentFinder,
             authorList]);
 
     function followingQuery(req, res, next) {
