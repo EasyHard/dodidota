@@ -1,0 +1,1 @@
+db.tournaments.update({name:new RegExp('WPC')}, {$push:{alias:"WPC2014"}});

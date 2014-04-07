@@ -1,10 +1,10 @@
 mixin matchNode(matches, mbom)
   for match in matches
-    div.node.clearfix
+    div.node
       - var vclass = match.videos && match.videos.length !== 0 ? [] : ['novideo'];
       if vclass.length === 0
         a.match-link(href="/tournamentDetail?"+stringify({tournamentId:tournament.id, s:match.id.s, r:match.id.r, m:match.id.m}) alt="查看视频" title="查看视频")
-      ul.match.list-group(class=vclass)
+      ul.match.list-group(class=vclass )
         - var teams = tournament.getMatchTeams(match);
         if teams.length
           - var class1 = match.m[0] > match.m[1] ? ["winner"] : [];
@@ -24,6 +24,7 @@ mixin matchNode(matches, mbom)
             | N/A
     if mbom
       div.wtf(style="padding-top:"+mbom+"px;")
+
 div.bracket.wb.clearfix.panel.panel-default
   div.title.panel-heading 胜者组
   div.panel-body.match-body
@@ -66,6 +67,7 @@ div.bracket.wb.clearfix.panel.panel-default
         div.clearfix(style="padding-top:"+mtop+"px;")
           +matchNode(matches)
       - r += 1
+
 
 div.hint
   | （点击比赛查看相应视频。灰色比赛暂无可观看视频。）

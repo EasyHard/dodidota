@@ -12,7 +12,7 @@ var groupstage = require('groupstage');
 require('../data/opendbonce')(function (cb) {
     var tournaments;
     async.waterfall([function (cb) {
-        Tournament.find().populate('teams').exec(cb);
+        Tournament.find({name:"WPC小组赛"}).populate('teams').exec(cb);
     }, function (tours, cb) {
         tournaments = tours;
         async.each(tournaments, function (tournament, cb) {
@@ -21,6 +21,7 @@ require('../data/opendbonce')(function (cb) {
     }, function (cb) {
         async.eachSeries(tournaments, function (tournament, cb) {
             console.log('tournament handling update', tournament.name);
+            console.log('details', tournament);
             async.waterfall([function (cb) {
                 tournament.fetchMatchUpdate(cb);
             }, function (cb) {
@@ -40,9 +41,17 @@ require('../data/opendbonce')(function (cb) {
                     console.log('new videos', video.title, video._id);
                     if (tournament.addVideo(video))
                         console.log('added video', video.title);
-                })
+                });
+                _.each(tournament.tournament.matches, function (match) {
+                    match.videos = _.map(match.videos, function (video) {
+                        if (video._id)
+                            return video._id;
+                        else
+                            return video;
+                    });
+                });
+                console.log(tournament.tournament.matches);
                 tournament.save(cb);
-                cb();
             }], cb);
         }, cb);
     }], function (err) {

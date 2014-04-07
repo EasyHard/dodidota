@@ -40,7 +40,7 @@ module.exports = function (app) {
             });
         }
     };
-    setget(['/', '/p/:page', '/gby/:groupby', '/gby/:groupby/p/:page'],
+    setget(['/newest/', '/newest/p/:page', '/newest/gby/:groupby', '/newest/gby/:groupby/p/:page'],
            [paramCons,
             setLocals,
             indexQuery,
@@ -161,7 +161,7 @@ module.exports = function (app) {
             doQuery,
             matchList]);
 
-    setget(['/match/'],
+    setget(['/match/', '/'],
            [paramCons,
             setLocals,
             matchQuery,
@@ -196,6 +196,10 @@ module.exports = function (app) {
 
     function canonicalURL(params) {
         var url = "/";
+        if (params.match)
+            url += "matchlist/";
+        else
+            url += "newest/";
         if (params.following)
             url += "following/";
         if (params.match)

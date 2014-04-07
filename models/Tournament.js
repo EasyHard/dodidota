@@ -17,6 +17,7 @@ var tournamentSchema = new mongoose.Schema({
     teams: [{
         type: Schema.Types.ObjectId, ref: 'Team'
     }],
+    lastUpdateAt: {type: Date},
     startAt: {type: Date},
     skipAfter: {type: Date},
     // a instance of https://github.com/clux/tournament
@@ -81,7 +82,12 @@ tournamentSchema.methods.addVideo = function (video) {
     if (matches.length === 1) {
         matches[0].videos = matches[0].videos || [];
         matches[0].videos.push(video._id);
+        console.log('add video', video.title, 'to match', matches[0].id);
         tournament.markModified('tournament');
+        if (!tournament.lastUpdateAt || video.published > tournament.lastUpdateAt) {
+            tournament.lastUpdateAt = video.published;
+            tournament.markModified('lastUpdateAt');
+        }
         succ = true;
     } else if (matches.length > 1) {
         console.log('matches can\'t not tell', matches[0].id, matches[0].p, matches[1].id, matches[1].p);
@@ -127,6 +133,19 @@ tournamentSchema.methods.populateVideos = function (cb) {
             cb();
         }
     }, cb);
+};
+
+tournamentSchema.methods.allVideos = function () {
+    return _.flatten(_.map(this.tournament.matches, function (match) {
+        return match.videos;
+    }));
+};
+
+tournamentSchema.methods.hasNewVideo = function() {
+    var hour = 3600*1000;
+    if (!this.lastUpdateAt)
+        return false;
+    return (new Date() - this.lastUpdateAt) < (hour*48);
 };
 
 // cb<err, tournament>, filtered videos are still in tournament.tournament.matches
@@ -216,6 +235,7 @@ tournamentSchema.methods.fetchMatchUpdate = function (cb) {
             }, cb);
         }], cb);
     } else {
+        console.log('herehere');
         cb();
     }
 };

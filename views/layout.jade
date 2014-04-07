@@ -9,19 +9,15 @@ html
     meta(name='author', content='EasyHard')
     link(rel="icon" type="image/png" href="/favicon.png")
     title #{title} - DodiDota, 一个Dota视频网站 - yet another dota video site.
-    != css('styles')
-    != js('application')
   body
-    .container
-      img.img-responsive.banner(src="/img/banner.png", alt="banner", title="banner")
-    .container
-      include partials/navigation
-
-    #wrap
-      .container
+    // .container
+    //   img.img-responsive.banner(src="/img/banner.png", alt="banner", title="banner")
+    #wrap.container
+        include partials/navigation
         .realcontainer
           include partials/flash
           block content
     include partials/footer
-
+    != css('styles')
+    != js('application')
     script(src="/js/ga.js")

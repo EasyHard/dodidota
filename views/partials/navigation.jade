@@ -10,14 +10,14 @@
        a.navbar-brand(href='/') DodiDota!
     .collapse.navbar-collapse
       ul.nav.navbar-nav
+        li(class=title=='Match'?'active':undefined)
+          a(href='/') 比赛
         li(class=title=='Newest'?'active':undefined)
-          a(href='/') 最新更新
+          a(href='/newest/') 最新更新
         li(class=title=='Authors'?'active':undefined)
           a(href='/author') 解说
         li(class=title=='Following'?'active':undefined)
           a(href='/following/') 我关注的更新
-        li(class=title=='Match'?'active':undefined)
-          a(href='/match/') 比赛
         li(class=title=='Contact'?'active':undefined)
           a(href='/contact') 联系我们
       ul.nav.navbar-nav.navbar-right

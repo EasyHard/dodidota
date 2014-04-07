@@ -14,15 +14,33 @@ body {
   // padding-top: 70px;
 }
 
-// #wrap {
-//   min-height: 100%;
-//   height: auto !important;
-//   height: 100%;
-//   // /* Negative indent footer by its height */
-//   // margin: 0 auto -110px;
-//   // /* Pad bottom by footer height + (optional) extra spacing */
-//   // padding: 0 0 120px;
-// }
+body {
+  background: url("/img/bg.jpg") no-repeat;
+  background-color: black;
+  //  background-image:url(/img/bg.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#wrap {
+    padding-top: 20%;
+}
+
+#footer {
+    text-color: white;
+}
+.realcontainer{
+    background-color: white;
+    border-radius: 1%;
+    padding: 2% 2% 2% 2%;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";       /* IE 8 */
+    filter: alpha(opacity=90);  /* IE 5-7 */
+    -moz-opacity: 0.90;          /* Netscape */
+    -khtml-opacity: 0.90;        /* Safari 1.x */
+    opacity: 0.90;               /* Good browsers */
+}
 
 // #footer {
 //   height: 110px;
@@ -169,10 +187,6 @@ body {
     display: inline;
 }
 
-.realcontainer {
-    width: 90%;
-    margin: auto;
-}
 
 .banner {
     margin: 16px auto;
@@ -217,12 +231,13 @@ body {
     width: 128px;
 //    margin-bottom: 17px;
     position: relative;
+
 }
 
 .match-link {
   display: block;
   width: 100%;
-  height: 72%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -269,3 +284,13 @@ body {
     height: 18px;
     padding-right:8px;
 }
+
+.new-icon {
+    border-radius: 5px;
+    padding: 3px 3px 3px 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    color:white;
+    background-color: #fd6813;
+}
+

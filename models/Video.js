@@ -42,4 +42,9 @@ videoSchema.methods.containsTeam = function (team) {
     return _.reduce(aliasContain, function(memo, now) {return memo || now;}, false);
 };
 
+videoSchema.methods.isNewVideo = function () {
+    var hour = 3600000;
+    return (new Date() - this.published)/hour < 48;
+};
+
 module.exports = mongoose.model('Video', videoSchema);

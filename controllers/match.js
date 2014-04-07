@@ -34,11 +34,7 @@ module.exports = function (app) {
                 return ;
             }
             tournament = tour;
-            if (req.query.authorName) {
-                tournament.populateVideos(cb);
-            } else {
-                cb();
-            }
+            tournament.populateVideos(cb);
         }], function (err) {
             if (err) {
                 next(err);
@@ -51,6 +47,7 @@ module.exports = function (app) {
                 title: 'Match',
                 tournament: tournament,
                 query: query(tournament),
+                _: _,
                 stringify: function (obj) {
                     obj = _.extend(obj, req.query);
                     return require('querystring').stringify(obj);
@@ -78,7 +75,7 @@ module.exports = function (app) {
                                     });
                                 } else {
                                     if (req.query.authorName)
-                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName});
+                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName;});
                                     res.render('home',
                                                {title: 'Match',
                                                 legend: tournament.name + "  " + req.query.teamName1 + " vs " + req.query.teamName2,
@@ -110,7 +107,7 @@ module.exports = function (app) {
                                     });
                                 } else {
                                     if (req.query.authorName)
-                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName});
+                                        videos = _.filter(videos, function (video) {return video.authorName === req.query.authorName;});
                                     var zb;
                                     if (tournament.tournament.last > 1) {
                                         if (mid.s === 1)

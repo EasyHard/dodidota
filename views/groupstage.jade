@@ -1,24 +1,30 @@
-table.tour-table.table.table-condensed.text-center
-  thead
-    tr
-      th.text-center Teams
-      for team in tournament.teams
-        th.text-center= team.name
-  tbody
-    - for (var i = 0; i < tournament.teams.length; i++)
+div.table-responsive
+  table.tour-table.table.table-condensed.text-center
+    thead
       tr
-        td= tournament.teams[i].name
-        - for (var j = 0; j < tournament.teams.length; j++)
-          if i !== j
-            - var params = {tournamentId:tournament.id, teamName1:tournament.teams[i].name, teamName2:tournament.teams[j].name};
-            - var videos = query(params);
-            if videos.length === 0
-              td
+        th.text-center Teams
+        for team in tournament.teams
+          th.text-center= team.name
+    tbody
+      - for (var i = 0; i < tournament.teams.length; i++)
+        tr
+          td= tournament.teams[i].name
+          - for (var j = 0; j < tournament.teams.length; j++)
+            if i !== j
+              - var params = {tournamentId:tournament.id, teamName1:tournament.teams[i].name, teamName2:tournament.teams[j].name};
+              - var videos = query(params);
+              if videos.length === 0
+                td
+              else
+                td
+                  a.tour-cell(href="/tournamentDetail?"+stringify(params))
+                    - var hasNew = _.reduce(_.map(videos, function (video) {return video.isNewVideo();}), function(memo, now) {return memo || now;}, false);
+                    - var src = hasNew?'/img/new_icon.png':'/img/video_icon.png';
+                    if !hasNew
+                      img(src="/img/video_icon.png" height="28"
+                      alt=tournament.teams[i].name + " vs " + tournament.teams[j].name
+                      title=tournament.teams[i].name + " vs " + tournament.teams[j].name)
+                    else
+                      span.new-icon New!
             else
-              td
-                a.tour-cell(href="/tournamentDetail?"+stringify(params))
-                  img(src='/img/video_icon.png' height="16" width="16"
-                  alt=tournament.teams[i].name + " vs " + tournament.teams[j].name
-                  title=tournament.teams[i].name + " vs " + tournament.teams[j].name)
-          else
-            td.warning N/A
+              td.warning N/A

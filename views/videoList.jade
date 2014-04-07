@@ -11,14 +11,19 @@ mixin makeList(videos, showAuthorIcon, id)
         if showAuthorIcon
           +makeAuthorIcon(video.authorName, "32", "32")
         != video.title
-        img.pull-right.video-icon.hidden-xs(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
-        span.pull-right.hidden-xs= video.formattedPublished
+        if video.isNewVideo()
+          span(style='margin-left:8px;')
+            span.new-icon.hidden-xs.hidden-sm New!
+            span.visible-xs.visible-sm New!
+        span.pull-right
+          span.hidden-xs.hidden-sm= video.formattedPublished
+          img.video-icon.hidden-xs.hidden-sm(src='/img/video_icon.png' height="24" width="24" alt="video icon" title="video icon" style="margin-left:16px")
 
  mixin makePageButton()
    #pagebutton.btn-group.pull-right
     - if (params.page != 1)
-      a(type="button" class="btn btn-default" href=genurl(params, {page: params.page-1})) 上一页
-    a(type="button" class="btn btn-default" href=genurl(params, {page: params.page+1})) 下一页
+      a.btn.btn-warning(type="button" href=genurl(params, {page: params.page-1})) 上一页
+    a.btn.btn-warning(type="button" href=genurl(params, {page: params.page+1})) 下一页
 
 mixin makeFollowAuthorButton(user, authorName, req, size)
   form.display-inline(method='POST' action='/togglefollowing')

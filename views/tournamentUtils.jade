@@ -9,3 +9,5 @@ mixin makeTournamentList(tournaments, legendTitle)
         a.list-group-item(href=href)
           img(src="/img/tournaments/"+tour.icon height="24" style="margin-right:8px;")
           = tour.name
+          if tour.hasNewVideo()
+            span.new-icon New!
