@@ -1,4 +1,5 @@
 * What is Dodidota?
+
 Dodidota is an express-based web site which tries to re-organize dota videos in Youku
 and present them in a better way. I launch it for some times. But now it is closed.
 
@@ -10,6 +11,7 @@ a list of youku videos that dodidota's algorithm believes it belongs to that
 match.
 
 * How does the algorithm works?
+
 Ideally dodidota could fetch tournament data from gosugamers, including
 tournament schedule, participants. (But as a prototype this part is done
 manually.) After that, dodidota regularly fetch tournament progress from gosugamers. It
